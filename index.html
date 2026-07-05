@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Altavista Propiedades — Encuentra tu hogar ideal</title>
+  <meta name="description" content="Altavista Propiedades: compra, venta y alquiler de propiedades premium. Más de 15 años conectando personas con su hogar ideal." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #0f2438;
+      --navy-light: #1b3a56;
+      --gold: #c9a227;
+      --gold-light: #e3c766;
+      --cream: #faf7f0;
+      --gray: #5c6b7a;
+      --white: #ffffff;
+      --radius: 14px;
+      --shadow: 0 10px 40px rgba(15, 36, 56, 0.12);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--navy);
+      background: var(--white);
+      line-height: 1.6;
+    }
+    h1, h2, h3 { font-family: 'Playfair Display', serif; line-height: 1.2; }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+    .btn {
+      display: inline-block;
+      padding: 14px 32px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 15px;
+      transition: transform .2s, box-shadow .2s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201, 162, 39, .35); }
+    .btn-gold { background: var(--gold); color: var(--white); }
+    .btn-outline { border: 2px solid var(--white); color: var(--white); background: transparent; }
+    .btn-outline:hover { background: var(--white); color: var(--navy); box-shadow: none; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(15, 36, 56, 0.92);
+      backdrop-filter: blur(10px);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 24px; max-width: 1140px; margin: 0 auto;
+    }
+    .logo { color: var(--white); font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; }
+    .logo span { color: var(--gold-light); }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,.85); font-size: 15px; font-weight: 500; transition: color .2s; }
+    .nav-links a:hover { color: var(--gold-light); }
+    .nav-cta { padding: 10px 24px; font-size: 14px; }
+    @media (max-width: 820px) { .nav-links { display: none; } }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      background:
+        linear-gradient(115deg, rgba(15,36,56,.92) 0%, rgba(15,36,56,.55) 60%, rgba(15,36,56,.25) 100%),
+        url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+      color: var(--white);
+      padding: 120px 0 80px;
+    }
+    .hero-content { max-width: 640px; }
+    .hero .eyebrow {
+      display: inline-block; letter-spacing: 3px; text-transform: uppercase;
+      font-size: 13px; font-weight: 600; color: var(--gold-light); margin-bottom: 20px;
+    }
+    .hero h1 { font-size: clamp(38px, 6vw, 64px); margin-bottom: 24px; }
+    .hero p { font-size: 19px; color: rgba(255,255,255,.85); margin-bottom: 36px; max-width: 520px; }
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+
+    /* STATS */
+    .stats {
+      background: var(--navy); color: var(--white);
+      padding: 48px 0;
+    }
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; text-align: center;
+    }
+    .stat h3 { font-size: 40px; color: var(--gold-light); }
+    .stat p { color: rgba(255,255,255,.7); font-size: 14px; letter-spacing: 1px; text-transform: uppercase; }
+    @media (max-width: 720px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    /* SECTIONS */
+    section { padding: 96px 0; }
+    .section-head { text-align: center; max-width: 620px; margin: 0 auto 64px; }
+    .section-head .eyebrow {
+      letter-spacing: 3px; text-transform: uppercase; font-size: 13px;
+      font-weight: 600; color: var(--gold); display: block; margin-bottom: 12px;
+    }
+    .section-head h2 { font-size: clamp(30px, 4vw, 42px); margin-bottom: 16px; }
+    .section-head p { color: var(--gray); font-size: 17px; }
+
+    /* PROPERTIES */
+    .properties { background: var(--cream); }
+    .prop-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+    .prop-card {
+      background: var(--white); border-radius: var(--radius); overflow: hidden;
+      box-shadow: var(--shadow); transition: transform .25s;
+    }
+    .prop-card:hover { transform: translateY(-8px); }
+    .prop-img { position: relative; height: 240px; overflow: hidden; }
+    .prop-img img { width: 100%; height: 100%; object-fit: cover; }
+    .prop-badge {
+      position: absolute; top: 16px; left: 16px;
+      background: var(--gold); color: var(--white);
+      padding: 6px 16px; border-radius: 999px; font-size: 12px; font-weight: 600;
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .prop-body { padding: 24px; }
+    .prop-price { color: var(--gold); font-size: 24px; font-weight: 700; font-family: 'Playfair Display', serif; }
+    .prop-body h3 { font-size: 20px; margin: 8px 0 4px; }
+    .prop-loc { color: var(--gray); font-size: 14px; margin-bottom: 16px; }
+    .prop-meta {
+      display: flex; gap: 20px; padding-top: 16px;
+      border-top: 1px solid #eee; color: var(--gray); font-size: 14px;
+    }
+    @media (max-width: 920px) { .prop-grid { grid-template-columns: 1fr; max-width: 460px; margin: 0 auto; } }
+
+    /* SERVICES */
+    .serv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+    .serv-card {
+      padding: 40px 32px; border: 1px solid #eef0f3; border-radius: var(--radius);
+      transition: box-shadow .25s, transform .25s;
+    }
+    .serv-card:hover { box-shadow: var(--shadow); transform: translateY(-6px); }
+    .serv-icon {
+      width: 60px; height: 60px; border-radius: 16px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px; margin-bottom: 24px;
+    }
+    .serv-card h3 { font-size: 21px; margin-bottom: 12px; }
+    .serv-card p { color: var(--gray); font-size: 15px; }
+    @media (max-width: 920px) { .serv-grid { grid-template-columns: 1fr; max-width: 460px; margin: 0 auto; } }
+
+    /* TESTIMONIALS */
+    .testimonials { background: var(--navy); color: var(--white); }
+    .testimonials .section-head h2 { color: var(--white); }
+    .testimonials .section-head p { color: rgba(255,255,255,.7); }
+    .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+    .testi-card {
+      background: var(--navy-light); border-radius: var(--radius); padding: 36px 30px;
+    }
+    .testi-stars { color: var(--gold-light); letter-spacing: 3px; margin-bottom: 16px; }
+    .testi-card blockquote { font-size: 15px; color: rgba(255,255,255,.85); margin-bottom: 24px; font-style: italic; }
+    .testi-author { display: flex; align-items: center; gap: 14px; }
+    .testi-avatar {
+      width: 46px; height: 46px; border-radius: 50%;
+      background: var(--gold); color: var(--white);
+      display: flex; align-items: center; justify-content: center; font-weight: 700;
+    }
+    .testi-author strong { display: block; font-size: 15px; }
+    .testi-author span { font-size: 13px; color: rgba(255,255,255,.6); }
+    @media (max-width: 920px) { .testi-grid { grid-template-columns: 1fr; max-width: 460px; margin: 0 auto; } }
+
+    /* CONTACT / CTA */
+    .contact { background: var(--cream); }
+    .contact-box {
+      background: var(--white); border-radius: 20px; box-shadow: var(--shadow);
+      display: grid; grid-template-columns: 1fr 1fr; overflow: hidden;
+    }
+    .contact-info {
+      background: linear-gradient(135deg, var(--navy), var(--navy-light));
+      color: var(--white); padding: 56px 48px;
+    }
+    .contact-info h2 { font-size: 32px; margin-bottom: 16px; }
+    .contact-info p { color: rgba(255,255,255,.8); margin-bottom: 32px; }
+    .contact-line { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; font-size: 15px; }
+    .contact-line .ico { color: var(--gold-light); font-size: 18px; }
+    .contact-form { padding: 56px 48px; display: flex; flex-direction: column; gap: 18px; }
+    .contact-form input, .contact-form textarea {
+      padding: 14px 18px; border: 1.5px solid #e3e7ec; border-radius: 10px;
+      font-family: inherit; font-size: 15px; outline: none; transition: border-color .2s;
+      resize: vertical;
+    }
+    .contact-form input:focus, .contact-form textarea:focus { border-color: var(--gold); }
+    @media (max-width: 860px) { .contact-box { grid-template-columns: 1fr; } .contact-info, .contact-form { padding: 40px 28px; } }
+
+    /* FOOTER */
+    footer { background: var(--navy); color: rgba(255,255,255,.65); padding: 40px 0; text-align: center; font-size: 14px; }
+    footer .logo { font-size: 20px; margin-bottom: 8px; display: inline-block; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="logo">Altavista <span>Propiedades</span></a>
+      <ul class="nav-links">
+        <li><a href="#propiedades">Propiedades</a></li>
+        <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#testimonios">Testimonios</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+      <a href="#contacto" class="btn btn-gold nav-cta">Agendar visita</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <span class="eyebrow">Real Estate Premium</span>
+        <h1>Encuentra el hogar que siempre soñaste</h1>
+        <p>Más de 15 años conectando personas con propiedades excepcionales. Compra, venta y alquiler con asesoramiento integral y transparente.</p>
+        <div class="hero-actions">
+          <a href="#propiedades" class="btn btn-gold">Ver propiedades</a>
+          <a href="#contacto" class="btn btn-outline">Hablar con un asesor</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="stats">
+    <div class="container stats-grid">
+      <div class="stat"><h3>1.200+</h3><p>Propiedades vendidas</p></div>
+      <div class="stat"><h3>15</h3><p>Años de experiencia</p></div>
+      <div class="stat"><h3>98%</h3><p>Clientes satisfechos</p></div>
+      <div class="stat"><h3>40+</h3><p>Asesores expertos</p></div>
+    </div>
+  </div>
+
+  <section class="properties" id="propiedades">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Destacadas</span>
+        <h2>Propiedades seleccionadas para ti</h2>
+        <p>Una curaduría de las mejores oportunidades del mercado, verificadas por nuestro equipo.</p>
+      </div>
+      <div class="prop-grid">
+        <article class="prop-card">
+          <div class="prop-img">
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80" alt="Casa moderna con jardín" loading="lazy" />
+            <span class="prop-badge">En venta</span>
+          </div>
+          <div class="prop-body">
+            <div class="prop-price">USD 485.000</div>
+            <h3>Casa Moderna Los Robles</h3>
+            <p class="prop-loc">📍 Barrio Norte, Zona Residencial</p>
+            <div class="prop-meta">
+              <span>🛏 4 dorm.</span><span>🛁 3 baños</span><span>📐 320 m²</span>
+            </div>
+          </div>
+        </article>
+        <article class="prop-card">
+          <div class="prop-img">
+            <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80" alt="Villa con piscina" loading="lazy" />
+            <span class="prop-badge">Exclusiva</span>
+          </div>
+          <div class="prop-body">
+            <div class="prop-price">USD 720.000</div>
+            <h3>Villa Mirador del Lago</h3>
+            <p class="prop-loc">📍 Costa Este, Vista al lago</p>
+            <div class="prop-meta">
+              <span>🛏 5 dorm.</span><span>🛁 4 baños</span><span>📐 450 m²</span>
+            </div>
+          </div>
+        </article>
+        <article class="prop-card">
+          <div class="prop-img">
+            <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80" alt="Departamento luminoso" loading="lazy" />
+            <span class="prop-badge">Alquiler</span>
+          </div>
+          <div class="prop-body">
+            <div class="prop-price">USD 1.450 <small style="font-size:14px;color:var(--gray)">/mes</small></div>
+            <h3>Loft Centro Histórico</h3>
+            <p class="prop-loc">📍 Centro, a 2 cuadras del metro</p>
+            <div class="prop-meta">
+              <span>🛏 2 dorm.</span><span>🛁 2 baños</span><span>📐 95 m²</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="servicios">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Servicios</span>
+        <h2>Te acompañamos en cada paso</h2>
+        <p>Un equipo integral para que tu operación inmobiliaria sea simple, segura y rentable.</p>
+      </div>
+      <div class="serv-grid">
+        <div class="serv-card">
+          <div class="serv-icon">🏠</div>
+          <h3>Compra y venta</h3>
+          <p>Tasación profesional, marketing de la propiedad y negociación experta para lograr el mejor precio del mercado.</p>
+        </div>
+        <div class="serv-card">
+          <div class="serv-icon">🔑</div>
+          <h3>Alquileres</h3>
+          <p>Gestión completa de alquileres: selección de inquilinos, contratos, cobranzas y mantenimiento de la propiedad.</p>
+        </div>
+        <div class="serv-card">
+          <div class="serv-icon">📊</div>
+          <h3>Inversiones</h3>
+          <p>Asesoramiento en inversiones inmobiliarias con análisis de rentabilidad, proyecciones y oportunidades off-market.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonials" id="testimonios">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow" style="color:var(--gold-light)">Testimonios</span>
+        <h2>Lo que dicen nuestros clientes</h2>
+        <p>Historias reales de personas que encontraron su lugar con nosotros.</p>
+      </div>
+      <div class="testi-grid">
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <blockquote>"Vendieron mi casa en menos de un mes y por encima del precio que esperaba. El acompañamiento fue impecable de principio a fin."</blockquote>
+          <div class="testi-author">
+            <div class="testi-avatar">MG</div>
+            <div><strong>María González</strong><span>Vendió su casa en Barrio Norte</span></div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <blockquote>"Como inversor extranjero necesitaba confianza total. Su equipo manejó todo el proceso legal y hoy tengo tres propiedades en renta."</blockquote>
+          <div class="testi-author">
+            <div class="testi-avatar">JR</div>
+            <div><strong>Javier Ramírez</strong><span>Inversor inmobiliario</span></div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <blockquote>"Encontraron el departamento perfecto para mi familia en tiempo récord. Atención cercana y muy profesional. Los recomiendo sin dudar."</blockquote>
+          <div class="testi-author">
+            <div class="testi-avatar">LF</div>
+            <div><strong>Lucía Fernández</strong><span>Compró en Costa Este</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contacto">
+    <div class="container">
+      <div class="contact-box">
+        <div class="contact-info">
+          <h2>¿Listo para dar el paso?</h2>
+          <p>Déjanos tus datos y un asesor te contactará en menos de 24 horas para ayudarte a encontrar tu propiedad ideal.</p>
+          <div class="contact-line"><span class="ico">📞</span> +54 11 5555-0123</div>
+          <div class="contact-line"><span class="ico">✉️</span> hola@altavistapropiedades.com</div>
+          <div class="contact-line"><span class="ico">📍</span> Av. del Libertador 4500, Buenos Aires</div>
+        </div>
+        <form class="contact-form" onsubmit="event.preventDefault(); alert('¡Gracias! Un asesor te contactará pronto.'); this.reset();">
+          <input type="text" placeholder="Nombre completo" required />
+          <input type="email" placeholder="Email" required />
+          <input type="tel" placeholder="Teléfono" />
+          <textarea rows="4" placeholder="¿Qué estás buscando?"></textarea>
+          <button type="submit" class="btn btn-gold">Enviar consulta</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <span class="logo">Altavista <span style="color:var(--gold-light)">Propiedades</span></span>
+      <p>© 2026 Altavista Propiedades. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
