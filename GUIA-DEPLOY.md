@@ -78,9 +78,13 @@ Estado verificado: HTTP 200, deployment `● Ready` en Production.
 
 ---
 
-## 6. Deploy automático de GitHub a Vercel (pendiente de activar)
+## 6. Deploy automático de GitHub a Vercel ✅ ACTIVADO
 
-> **IMPORTANTE**: El deploy actual se hizo con el CLI, por lo que **los push a GitHub NO despliegan automáticamente todavía**. Para activarlo hay dos caminos:
+> **ESTADO ACTUAL**: El deploy automático **ya está activo** en este proyecto. Se activó con `npx vercel git connect --yes` (Vercel de hecho ya había vinculado el repo automáticamente al detectar el remote de git durante el primer deploy con CLI). Verificado vía API: `link.type = github`, repo `patomdp/real-estate-landing`, rama de producción `main`.
+>
+> Cada `git push` a `main` despliega automáticamente a producción. No hace falta volver a ejecutar `vercel deploy`.
+
+Las siguientes instrucciones quedan como referencia por si hay que reconectarlo o repetirlo en otro proyecto:
 
 ### Opción A — Desde el CLI (rápida)
 
@@ -112,6 +116,17 @@ git commit --allow-empty -m "test: verificar deploy automático"
 git push
 # Luego revisar: npx vercel ls  → debe aparecer un deployment nuevo con origen "github"
 ```
+
+### Verificar la conexión por API (avanzado)
+
+```bash
+# El token del CLI está en el auth.json de com.vercel.cli (ruta según SO)
+curl -s "https://api.vercel.com/v9/projects/<PROJECT_ID>?teamId=<TEAM_ID>" \
+  -H "Authorization: Bearer <TOKEN>"
+# El campo "link" debe mostrar: {"type": "github", "org": "patomdp", "repo": "real-estate-landing", ...}
+```
+
+- **Project ID de este proyecto**: `prj_msszlJVywKLCDdfFd32zJAFGtV0l`
 
 ---
 
