@@ -156,3 +156,43 @@ npx netlify-cli deploy --prod --dir . # Deploy de la carpeta actual
 | **Cloudflare Pages** | dash.cloudflare.com → Pages → conectar el repo. CDN muy rápido. |
 
 Cualquiera de estas sirve el mismo `index.html` sin cambios en el código.
+
+---
+
+## 8. Dominio personalizado: subdominio de Cloudflare → Vercel
+
+Caso: apuntar `realestate.malawebs.com` (DNS en Cloudflare) al proyecto de Vercel.
+
+### Proceso manual (lo que se hizo la primera vez)
+
+1. **En Vercel**: proyecto → Settings → Domains → Add → `realestate.malawebs.com`. Vercel muestra el registro requerido, por ejemplo:
+   - Tipo: `CNAME` | Nombre: `realestate` | Valor: `868e145319363805.vercel-dns-017.com.`
+2. **En Cloudflare**: dash → zona `malawebs.com` → DNS → Add record → crear ese CNAME.
+   - ⚠️ **Proxy: Disabled (DNS only, nube gris)** — con el proxy naranja activado la verificación de Vercel falla o el SSL da problemas.
+3. Volver a Vercel y clic en **Refresh** hasta que pase de "Invalid Configuration" a verificado.
+4. Esperar la emisión del certificado SSL (1–10 minutos típicamente).
+
+### Proceso automatizado (script incluido en el repo)
+
+El script [`scripts/setup-domain.sh`](scripts/setup-domain.sh) hace los 4 pasos por API, de punta a punta e idempotente (se puede re-ejecutar sin romper nada):
+
+```bash
+CLOUDFLARE_API_TOKEN=<token> ./scripts/setup-domain.sh realestate.malawebs.com
+# Con otro proyecto: agregar el project-id como segundo argumento
+```
+
+Qué hace por dentro:
+
+1. `POST https://api.vercel.com/v10/projects/{id}/domains` → agrega el dominio al proyecto.
+2. `GET https://api.vercel.com/v6/domains/{domain}/config` → obtiene el CNAME recomendado (no hay que copiarlo a mano del dashboard).
+3. `GET /zones?name={apex}` + `POST /zones/{zone}/dns_records` en la API de Cloudflare → crea el CNAME con `"proxied": false`.
+4. Polling hasta que el dominio queda `verified: true` y responde HTTP 200 con SSL.
+
+### Credenciales necesarias
+
+| Credencial | De dónde sale | Permisos |
+|---|---|---|
+| Token Vercel | Lo lee automáticamente del `auth.json` del CLI (`vercel login`) | — |
+| `CLOUDFLARE_API_TOKEN` | dash.cloudflare.com → My Profile → API Tokens → Create Token → plantilla **"Edit zone DNS"** | `Zone.DNS:Edit` limitado a la zona `malawebs.com` |
+
+> **Nota para el futuro skill**: con estas dos credenciales disponibles, todo el flujo (crear repo → push → deploy Vercel → conectar Git → subdominio Cloudflare) queda 100% automatizable por API/CLI, sin tocar ningún dashboard. Este script es la pieza que faltaba; el resto ya está documentado en las secciones 2–6.
